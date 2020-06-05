@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "elasticsearch": "^16.7.1"
+  }
+}
