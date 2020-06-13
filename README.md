@@ -1,3 +1,3 @@
 # assemble
 
-A Math Contest Generation API, written in Elasticsearch
+A Math Contest Generation API, powered by GraphQL and Elasticsearch
