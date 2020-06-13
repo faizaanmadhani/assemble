@@ -5,19 +5,20 @@ import json
 class scraperParse:
 
     question_array = []
+    temp_answer_array = []
 
-    def scrapeContest(self,level: str):
+    def scrapeContest(self, level: str):
         base_url = "https://artofproblemsolving.com/wiki/index.php/"
         start_year = 2002
         end_year = 2021
         a = True
 
         for i in range(start_year, end_year):
-
             if a == True:
                 letter = 'A'
             else:
                 letter = 'B'
+            self.findAnswers(str(i), letter)
             for j in range(1, 26):
                 url = base_url + str(i) + '_AMC_' + '_' + level + letter + '_' + 'Problems/Problem_' + str(j)
                 print(url)
@@ -84,10 +85,27 @@ class scraperParse:
         question_obj['paper'] = paper #string (A, B)
         question_obj['problem'] = problem #string
         question_obj['solution'] = solution #string
+        question_obj['answer_key'] = self.temp_answer_array[problem_num]
 
         question_json_obj = json.dumps(question_obj)
 
+        print(question_json_obj)
         self.question_array.append(question_json_obj)
+
+    def findAnswers(self, year: str, letter: str ):
+        url = "https://artofproblemsolving.com/wiki/index.php/" + year + "_AMC_" + "10" + letter + "_Answer_Key"
+        page = requests.get(url)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        #Make answer array empty
+        self.temp_answer_array = []
+
+        ol = soup.find("ol")
+
+        self.temp_answer_array = ol.findChildren("li", recursive=False)
+
+        for i in range(len(self.temp_answer_array)):
+            self.temp_answer_array[i] = self.temp_answer_array[i].get_text()
+
 
 
 if __name__ == "__main__":
@@ -97,7 +115,8 @@ if __name__ == "__main__":
     sp.scrapeContest('10')
     #sp.parseProblem('https://artofproblemsolving.com/wiki/index.php/2005_AMC__10B_Problems/Problem_10', 10, 2002, 'B')
 
-    print(sp.question_array)
+    #sp.findAnswers(str(2019), 'A')
+    #print(sp.question_array)
 
 
 
