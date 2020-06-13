@@ -10,7 +10,7 @@ class scraperParse:
     def scrapeContest(self, level: str):
         base_url = "https://artofproblemsolving.com/wiki/index.php/"
         start_year = 2002
-        end_year = 2021
+        end_year = 2020
         a = True
 
         for i in range(start_year, end_year):
@@ -19,6 +19,7 @@ class scraperParse:
             else:
                 letter = 'B'
             self.findAnswers(str(i), letter)
+            print(self.temp_answer_array)
             for j in range(1, 26):
                 url = base_url + str(i) + '_AMC_' + '_' + level + letter + '_' + 'Problems/Problem_' + str(j)
                 print(url)
@@ -28,6 +29,8 @@ class scraperParse:
                 a = False
             else:
                 a = True
+
+
 
     def parseProblem(self, url: str, problem_num: int, year: int, letter: str):
         page = requests.get(url)
@@ -85,7 +88,7 @@ class scraperParse:
         question_obj['paper'] = paper #string (A, B)
         question_obj['problem'] = problem #string
         question_obj['solution'] = solution #string
-        question_obj['answer_key'] = self.temp_answer_array[problem_num]
+        question_obj['answer_key'] = self.temp_answer_array[problem_num - 1]
 
         question_json_obj = json.dumps(question_obj)
 
@@ -93,7 +96,7 @@ class scraperParse:
         self.question_array.append(question_json_obj)
 
     def findAnswers(self, year: str, letter: str ):
-        url = "https://artofproblemsolving.com/wiki/index.php/" + year + "_AMC_" + "10" + letter + "_Answer_Key"
+        url = "https://artofproblemsolving.com/wiki/index.php/" + year + "_AMC_" + "12" + letter + "_Answer_Key"
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
         #Make answer array empty
@@ -106,14 +109,22 @@ class scraperParse:
         for i in range(len(self.temp_answer_array)):
             self.temp_answer_array[i] = self.temp_answer_array[i].get_text()
 
+    def writeToFile(self):
+
+        json_obj = {}
+        json_obj['amc12'] = self.question_array
+
+        with open('questions.json', 'w', encoding='utf-8') as f:
+            json.dump(json_obj, f, ensure_ascii=False, indent=4)
 
 
 if __name__ == "__main__":
 
     sp = scraperParse()
 
-    sp.scrapeContest('10')
+    sp.scrapeContest('12')
     #sp.parseProblem('https://artofproblemsolving.com/wiki/index.php/2005_AMC__10B_Problems/Problem_10', 10, 2002, 'B')
+    sp.writeToFile()
 
     #sp.findAnswers(str(2019), 'A')
     #print(sp.question_array)
