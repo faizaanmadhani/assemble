@@ -3,7 +3,7 @@ const params = require('./json/es-settings-mapping.json')
 
 client.indices.create(
     {
-        index: "catalog",
+        index: "amc12",
         body: params
     },
     (error, response, status) => {
