@@ -9,9 +9,9 @@ client.ping({
     : console.log('ElasticSearch is ok');
 });
 
-function ElasticSearchClient(body) {
+function ElasticSearchClient(index, body) {
     //Perform the search by passing in the index, search query and type
-    return client.search({index: 'catalog', body: body});
+    return client.search({index: index, body: body});
 }
 
 function ApiElasticSearchClient(req, res) {

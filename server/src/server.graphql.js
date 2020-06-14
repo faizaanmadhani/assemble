@@ -4,22 +4,41 @@ const { makeExecutableSchema } = require('graphql-tools');
 
 //Construct a schema, using GraphQL schema language.
 const typeDefs = `
-  type Product {
-    name: String
-    brand: String!
-    article: String
-    price: String
+  type Question {
+    year: Int
+    number: Int
+    paper: String
+    problem: String
+    solution: String
+    tags: [String]
+
+  }
+  type amc10 {
+    question: Question
+  }
+  type amc12 {
+    question: Question
   }
   type Query {
-    products: [Product]
+    amc10: [Question]
+    amc12: [Question]
   }
 `;
 
 // The root provides a resolver function for each API endpoint
 const resolvers = {
     Query: {
-      products: () => new Promise((resolve, reject) => {
-        ElasticSearchClient({...elasticSearchSchema})
+      amc10: () => new Promise((resolve, reject) => {
+        ElasticSearchClient("amc10", {...elasticSearchSchema})
+          .then(r => {
+            let _source = r['hits']['hits'];
+                _source.map((item, i) => _source[i] = item._source);
+  
+            resolve(_source);
+          });
+      }),
+      amc12: () => new Promise((resolve, reject) => {
+        ElasticSearchClient("amc12", {...elasticSearchSchema})
           .then(r => {
             let _source = r['hits']['hits'];
                 _source.map((item, i) => _source[i] = item._source);
