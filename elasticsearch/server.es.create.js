@@ -1,5 +1,5 @@
 const client = require('./server.client')
-const params = require('./json/es-settings-mapping.json')
+const params = require('../server-gql/src/json/es-settings-mapping.json')
 
 client.indices.create(
     {

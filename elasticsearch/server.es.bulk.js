@@ -2,7 +2,7 @@ const _ = require('lodash');
 const client = require('./server.client');
 
 //Test Bulk Data
-const DATA = require('./json/amc12.json').amc12;
+const DATA = require('../server-gql/src/json/amc12.json').amc12;
 
 /**
  * Generate bulk schema

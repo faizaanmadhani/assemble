@@ -4,6 +4,9 @@
     "apollo-server-express": "^2.14.4",
     "body-parser": "^1.19.0",
     "elasticsearch": "^16.7.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "graphql": "^15.1.0",
+    "graphql-compose": "^7.18.1",
+    "graphql-compose-elasticsearch": "^4.0.9"
   }
 }
