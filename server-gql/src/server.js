@@ -4,7 +4,8 @@ const bodyParser = require('body-parser')
 const path = require('path');
 //GraphQL Dependancies
 const {ApolloServer} = require('apollo-server-express');
-const {ApiElasticSearchClient} = require('./server.elasticsearch');
+const {ApiElasticSearchClient} = require('../../elasticsearch/server.elasticsearch');
+const {bulk} = require('../../elasticsearch/server.es.bulk')
 const madeExecutableSchema = require('./server.graphql');
 
 const PORT = 8080;
@@ -32,7 +33,8 @@ app.use(function (req, res, next) {
 });
 
 // Define the `/search` route that should return elastic search results
-app.get('/search', ApiElasticSearchClient);
+app.get('/graphql/search', ApiElasticSearchClient);
+app.get('/graphql/bulk', bulk);
 
 server.applyMiddleware({app});
 
@@ -44,4 +46,3 @@ app.listen(PORT, function () {
 
 
 // Define the `/search` route that should return elastic search results
-app.get('/search', ApiElasticSearchClient);

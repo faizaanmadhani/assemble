@@ -1,5 +1,5 @@
-const { ElasticSearchClient } = require('./server.elasticsearch');
-const elasticSearchSchema = require('./server.es.schema');
+const { ElasticSearchClient } = require('../../elasticsearch/server.elasticsearch');
+const elasticSearchSchema = require('../../elasticsearch//server.es.schema');
 const { makeExecutableSchema } = require('graphql-tools');
 
 //Construct a schema, using GraphQL schema language.

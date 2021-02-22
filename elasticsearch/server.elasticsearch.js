@@ -1,4 +1,5 @@
 const client = require("./server.client");
+const {createMatches, mustSearch, shouldSearch, createQuery} = require("../querying/queries")
 
 //Ping the client to know if elasticsearch is up
 client.ping({
@@ -16,7 +17,12 @@ function ElasticSearchClient(index, body) {
 
 function ApiElasticSearchClient(req, res) {
     // perform the actual search passing in the index, the search query and the type
-    ElasticSearchClient({...elasticSearchSchema})
+    let match1 = createMatches([{"paper": "A"}, {"number": 4}]);
+    let match2 = createMatches([{"year": 2003}, {"year": 2004}, {"year": 2005}, {"year": 2006}]);
+    match1.push(shouldSearch(match2));
+    let query = createQuery(0, 10, mustSearch(match1));
+
+    ElasticSearchClient("amc12", query)
       .then(r => res.send(r['hits']['hits']))
       .catch(e => {
         console.error(e);
