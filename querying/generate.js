@@ -4,7 +4,8 @@ const {ElasticSearchClient, ApiElasticSearchClient} = require("../elasticsearch/
 async function generateMock(req, res) {
     let questions = [];
     for(let i = 1; i <= 25; ++i) {
-        let query = createQuery(0, 1, mustSearch(createMatches([{"number": i}])));
+        let ran = Math.floor(Math.random() * 40);
+        let query = createQuery(ran, 1, mustSearch(createMatches([{"number": i}])));
         let k = await ElasticSearchClient("amc12", query)
         questions.push(k['hits']);
     }
