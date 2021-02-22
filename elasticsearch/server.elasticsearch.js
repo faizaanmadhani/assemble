@@ -15,12 +15,11 @@ function ElasticSearchClient(index, body) {
     return client.search({index: index, body: body});
 }
 
-function ApiElasticSearchClient(req, res) {
+function ApiElasticSearchClient(query, res) {
     // perform the actual search passing in the index, the search query and the type
     let match1 = createMatches([{"paper": "A"}, {"number": 4}]);
     let match2 = createMatches([{"year": 2003}, {"year": 2004}, {"year": 2005}, {"year": 2006}]);
     match1.push(shouldSearch(match2));
-    let query = createQuery(0, 10, mustSearch(match1));
 
     ElasticSearchClient("amc12", query)
       .then(r => res.send(r['hits']['hits']))

@@ -31,6 +31,7 @@ function shouldSearch(matches) {
 // create queries using createMatches, mustSearch, and shouldSearch
 function createQuery(start, number, query) {
     const q = {
+        "from": start, "size": number,
         "query":
             query
     }

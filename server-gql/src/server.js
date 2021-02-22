@@ -7,6 +7,7 @@ const {ApolloServer} = require('apollo-server-express');
 const {ApiElasticSearchClient} = require('../../elasticsearch/server.elasticsearch');
 const {bulk} = require('../../elasticsearch/server.es.bulk')
 const madeExecutableSchema = require('./server.graphql');
+const {generateMock} = require('../../querying/generate');
 
 const PORT = 8080;
 
@@ -33,7 +34,7 @@ app.use(function (req, res, next) {
 });
 
 // Define the `/search` route that should return elastic search results
-app.get('/graphql/search', ApiElasticSearchClient);
+app.get('/graphql/search', generateMock);
 app.get('/graphql/bulk', bulk);
 
 server.applyMiddleware({app});
