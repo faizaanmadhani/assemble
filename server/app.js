@@ -4,7 +4,7 @@ const path = require('path');
 const app = express()
 const port = 3000
 
-const {ApiElasticSearchClient} = require('../elasticsearch/server.elasticsearch.js')
+const {ApiElasticSearchClient} = require('./elasticsearch/server.elasticsearch.js')
 
 //Use BodyParser as middleware to parse json
 app.use(bodyParser.json())
