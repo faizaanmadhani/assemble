@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import { Drawer, Menu, Button, Form, Col, Row, Input, Select, DatePicker  } from 'antd';
 import { PlusOutlined, MenuOutlined, PieChartOutlined, ContainerOutlined, DesktopOutlined, MenuFoldOutlined, MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { withRouter, Link as RouterLink, Router } from 'react-router-dom';
 
 const { SubMenu } = Menu
 
@@ -37,8 +38,6 @@ class Navbar extends Component {
             }
         }
     }
-
-    
         
     toggleCollapsed = () => {
       this.setState({
@@ -63,13 +62,13 @@ class Navbar extends Component {
     
     mainNav = (
         <Menu style={this.mainMenuStyle()} mode="horizontal" theme="light" align="center" >
-            <Menu.Item icon={<MailOutlined />}>
+            <Menu.Item onClick={() => {this.props.history.push("/home")}}icon={<MailOutlined />}>
                 Home 
             </Menu.Item>
-            <Menu.Item icon={<AppstoreOutlined />}>
+            <Menu.Item onClick={() => {this.props.history.push("/problems")}} icon={<AppstoreOutlined />}>
                 Problems
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item onClick={() => {this.props.history.push("/mocks")}}>
                 Mock Problem Sets    
             </Menu.Item>
             <SubMenu icon={<SettingOutlined />} title="Navigation Three - Submenu">
@@ -148,4 +147,4 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
